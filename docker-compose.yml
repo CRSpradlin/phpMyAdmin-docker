@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+    mysqldatabase:
+        image: mysql:latest
+        restart: always
+        environment: 
+            MYSQL_DATABASE: mysqldb
+            # So you don't have to use root, but you can if you like
+            MYSQL_USER: root
+            # You can use whatever password you like
+            MYSQL_PASSWORD: student
+            # Password for root access
+            MYSQL_ROOT_PASSWORD: student
+        expose: 
+            - "3306"
+    phpmyadmin:
+        image: phpmyadmin:latest
+        restart: always
+        links:
+            - "mysqldatabase:db"
+        volumes:
+            - ./site:/var/www/html/site
+        ports:
+            - 80:80
